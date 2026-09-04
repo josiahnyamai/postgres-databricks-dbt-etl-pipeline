@@ -1,7 +1,7 @@
 sources:
-  - name: source1
+  - name: walmart_bronze
     catalog: bronze_layer
-    schema: source1
+    schema: walmart
     tables:
       - name: customers
       - name: orders
