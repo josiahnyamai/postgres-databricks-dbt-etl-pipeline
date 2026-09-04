@@ -1,0 +1,10 @@
+sources:
+  - name: source1
+    catalog: bronze_layer
+    schema: source1
+    tables:
+      - name: customers
+      - name: orders
+      - name: products
+      - name: order_items
+      - name: stores
