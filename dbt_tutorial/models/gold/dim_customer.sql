@@ -20,6 +20,8 @@ SELECT
         ELSE FALSE
     END AS is_current,
 
+    current_timestamp() AS row_created_ts,
+
     source_system
 
 FROM {{ref('dim_customer_snapshot')}}
