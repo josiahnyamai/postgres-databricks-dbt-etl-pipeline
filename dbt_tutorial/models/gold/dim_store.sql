@@ -1,13 +1,10 @@
-WITH customer_dimension AS (
+WITH store_dimension AS (
 
-    -- Unknown Customer
+    -- Unknown Store
     SELECT
-        CAST('-1' AS STRING)                     AS customer_sk,
-        -1                                       AS customer_id,
-        'UNKNOWN'                                AS first_name,
-        'UNKNOWN'                                AS last_name,
-        'UNKNOWN'                                AS email,
-        'UNKNOWN'                                AS phone,
+        CAST('-1' AS STRING)                     AS store_sk,
+        -1                                       AS store_id,
+        'UNKNOWN'                                AS store_name,
         'UNKNOWN'                                AS city,
         'UNKNOWN'                                AS province,
         'UNKNOWN'                                AS country,
@@ -19,14 +16,11 @@ WITH customer_dimension AS (
 
     UNION ALL
 
-    -- Not Applicable Customer
+    -- Not Applicable Store
     SELECT
-        CAST('-2' AS STRING)                     AS customer_sk,
-        -2                                       AS customer_id,
-        'Not Applicable'                         AS first_name,
-        'Not Applicable'                         AS last_name,
-        'Not Applicable'                         AS email,
-        'Not Applicable'                         AS phone,
+        CAST('-2' AS STRING)                     AS store_sk,
+        -2                                       AS store_id,
+        'Not Applicable'                         AS store_name,
         'Not Applicable'                         AS city,
         'Not Applicable'                         AS province,
         'Not Applicable'                         AS country,
@@ -38,14 +32,11 @@ WITH customer_dimension AS (
 
     UNION ALL
 
-    -- SCD Type 2 Customer Records
+    -- Actual store records from SCD2 snapshot
     SELECT
-        {{ dbt_utils.generate_surrogate_key(['customer_id', 'dbt_valid_from']) }} AS customer_sk,
-        customer_id,
-        first_name,
-        last_name,
-        email,
-        phone,
+        {{ dbt_utils.generate_surrogate_key(['store_id','dbt_valid_from']) }} AS store_sk,
+        store_id,
+        store_name,
         city,
         province,
         country,
@@ -64,8 +55,8 @@ WITH customer_dimension AS (
 
         source_system
 
-    FROM {{ ref('dim_customer_snapshot') }}
+    FROM {{ ref('dim_store_snapshot') }}
 )
 
 SELECT *
-FROM customer_dimension
+FROM store_dimension
